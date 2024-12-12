@@ -1,1 +1,1 @@
-# CI-Hybrid-System-Food-Classification
+# CNN-Food-Classification
