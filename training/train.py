@@ -9,12 +9,12 @@ sys.path.append(r'C:\Users\User\OneDrive\Desktop\Computational Intelligence\Assi
 from models.cnn import create_cnn_model  
 
 # Define directory paths
-processed_dir = r"C:\Users\User\OneDrive\Desktop\Computational Intelligence\Assignment 2\Malaysian-11 Food Dataset\processed_images"
+processed_dir = r"C:\Users\User\OneDrive\Desktop\Computational Intelligence\Assignment 2\malaysian_food\processed_images"
 
 # Load preprocessed datasets
 def load_datasets():
     """Loads preprocessed datasets from directories."""
-    batch_size = 25
+    batch_size = 20
     img_size = (224, 224)
     
     # Load training data
@@ -37,17 +37,6 @@ def load_datasets():
     
     return train_gen, val_gen
 
-
-# Data Augmentation - Enhanced
-data_augmentation = tf.keras.Sequential([
-    tf.keras.layers.RandomFlip("horizontal_and_vertical"),  
-    tf.keras.layers.RandomRotation(0.2),  
-    tf.keras.layers.RandomZoom(0.2), 
-    tf.keras.layers.RandomContrast(0.2),  
-    tf.keras.layers.RandomBrightness(0.2),  
-    tf.keras.layers.RandomHeight(0.2),  
-    tf.keras.layers.RandomWidth(0.2),  
-])
 
 # Function to plot training accuracy over epochs
 def plot_training_accuracy(history):
@@ -78,7 +67,7 @@ if __name__ == "__main__":
     )
 
     # Callbacks: ReduceLROnPlateau
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, min_lr=1e-6, verbose=1)
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=3, min_lr=1e-6, verbose=1)
 
     # Train the model 
     history = model.fit(
