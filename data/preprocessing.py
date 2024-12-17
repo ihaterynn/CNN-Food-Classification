@@ -116,7 +116,7 @@ def check_class_distribution(base_path):
         # Traverse through the dataset split folder
         for root, dirs, files in os.walk(split_path):
             for file in files:
-                # Only count image files (can modify to check specific extensions if needed)
+                # Only count image files 
                 if file.endswith(('.jpg', '.jpeg', '.png')):
                     label = os.path.basename(root)
                     labels.append(label)
@@ -126,7 +126,7 @@ def check_class_distribution(base_path):
         print(f"Class distribution in {split} set:")
         for class_name, count in distribution.items():
             print(f"  {class_name}: {count}")
-        print()  # Add a blank line for readability
+        print()  
 
 def visualize_random_training_images(base_path, num_images=20):
     """
@@ -159,7 +159,7 @@ def visualize_random_training_images(base_path, num_images=20):
     axes = axes.flatten()
 
     for ax, image, label in zip(axes, sampled_images, sampled_labels):
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB for display
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  
         ax.imshow(image)
         ax.set_title(label)
         ax.axis("off")
