@@ -1,7 +1,7 @@
 import tensorflow as tf
 import os
 import sys
-from tensorflow.keras.callbacks import ReduceLROnPlateau
+from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 import matplotlib.pyplot as plt
 
 
@@ -61,13 +61,15 @@ if __name__ == "__main__":
 
     # Compile the model with Adam optimizer and ReduceLROnPlateau
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
         loss='sparse_categorical_crossentropy',
         metrics=['accuracy']
     )
 
-    # Callbacks: ReduceLROnPlateau
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.3, patience=3, min_lr=1e-6, verbose=1)
+    # Callbacks: ReduceLROnPlateau and EarlyStopping
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, min_lr=0.0001, verbose=1)
+
+    early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True, verbose=1)
 
     # Train the model 
     history = model.fit(
@@ -75,7 +77,7 @@ if __name__ == "__main__":
         validation_data=val_gen,
         epochs=20,  
         verbose=1, 
-        callbacks=[reduce_lr]
+        callbacks=[reduce_lr, early_stopping]
     )
 
     # Save the model
